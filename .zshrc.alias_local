@@ -1,0 +1,36 @@
+# local alias設定
+
+function gitAction(){
+	git $1 origin $2
+}
+
+alias g="git"
+alias gst="git status -uno"
+alias gb="git branch"
+alias gps="gitAction push "
+alias gpu="gitAction pull"
+alias gco="git checkout "
+alias gmer="git merge "
+alias glog='git log --pretty=format:"[%cd] %h - %an, %ar : %s" --date=iso'
+alias ll='ls -al'
+alias vizsh='vi ~/.zshrc.alias_local'
+
+
+#-------------------------
+# msao設定
+#-------------------------
+alias msao_dir="/crooz/venus4_space/venus/venus_4.0/project/msao/master"
+#alias msao_dir="/Volumes/venus_4.0/project/msao/master/"
+alias vm4='ssh root@192.168.0.10'
+alias trans="ssh jcao@transPort01"
+alias jcaoAir="ssh jcao@172.18.12.95"
+alias jcaoAirIp="172.18.12.95"
+alias ctags="/usr/local/Cellar/ctags/5.8/bin/ctags"
+alias ctagsPHP="ctags --languages=php -f ~/php.tags `pwd`"
+
+
+tagsCmd='ctags --languages=php -f'
+tagsVariable=''
+tagsVariable=$tagsVariable"cd $HOME/sample;$tagsCmd $HOME/.vim/tags/sample.tags $HOME/sample;"
+tagsVariable=$tagsVariable"cd $HOME/test;  $tagsCmd $HOME/.vim/tags/test.tags   $HOME/test;"
+alias TAGS=$tagsVariable
