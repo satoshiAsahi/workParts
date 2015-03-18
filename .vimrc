@@ -128,7 +128,6 @@ set clipboard+=unnamed,autoselect
 au BufNewFile,BufRead *.php set tags+=$HOME/php.tags
 " vim-tags
 au BufNewFile,BufRead *.php let g:vim_tags_project_tags_command = "ctags --languages=php -f ~/php.tags `pwd` 2>/dev/null &"
-
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
@@ -138,6 +137,9 @@ let php_baselib = 1
 let php_htmlInStrings = 1
 let php_noShortTags = 1
 let php_parent_error_close = 1
+
+" tplの設定
+au BufNewFile,BufRead *.tpl set filetype=html
 
 " vimproc {{{
 NeoBundle 'Shougo/vimproc', {
