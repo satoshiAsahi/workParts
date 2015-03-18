@@ -103,6 +103,7 @@ set smartindent
 
 " key map
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+nnoremap <silent> <C-l> :NERDTreeFind<CR>
 
 "行番号をマウスコピーした時についてこないように設定
 set mouse=a
@@ -207,5 +208,22 @@ let QFixWin_EnableMode = 1
 " QFixHowm/QFixGrepの結果表示にロケーションリストを使用する/しない
 let QFix_UseLocationList = 0
 "}}}
+
+inoremap ( ()<ESC>i
+inoremap <expr> ) ClosePair(')')
+inoremap { {}<ESC>i
+inoremap <expr> } ClosePair('}')
+inoremap [ []<ESC>i
+inoremap <expr> ] ClosePair(']')
+" pair close checker.
+" from othree vimrc ( http://github.com/othree/rc/blob/master/osx/.vimrc )
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endf
+
 " check plugin
 NeoBundleCheck
