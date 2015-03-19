@@ -20,12 +20,49 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle "tyru/caw.vim.git"
 NeoBundle "ctrlpvim/ctrlp.vim"
-NeoBundle 'kana/vim-submode'
 " ctagsの自動生成plugin
 NeoBundle 'szw/vim-tags'
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
 
+"{{{ windowのサイズを可変
+NeoBundle 'kana/vim-submode'
+nnoremap s <Nop>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
+nnoremap sn gt
+nnoremap sp gT
+nnoremap sr <C-w>r
+nnoremap s= <C-w>=
+nnoremap sw <C-w>w
+nnoremap so <C-w>_<C-w>|
+nnoremap sO <C-w>=
+nnoremap sN :<C-u>bn<CR>
+nnoremap sP :<C-u>bp<CR>
+nnoremap st :<C-u>tabnew<CR>
+nnoremap sT :<C-u>Unite tab<CR>
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+nnoremap sq :<C-u>q<CR>
+nnoremap sQ :<C-u>bd<CR>
+nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
+
+call submode#enter_with('bufmove', 'n', '', 'd>', '<C-w>>')
+call submode#enter_with('bufmove', 'n', '', 'd<', '<C-w><')
+call submode#enter_with('bufmove', 'n', '', 'd+', '<C-w>+')
+call submode#enter_with('bufmove', 'n', '', 'd-', '<C-w>-')
+call submode#map('bufmove', 'n', '', '>', '<C-w>>')
+call submode#map('bufmove', 'n', '', '<', '<C-w><')
+call submode#map('bufmove', 'n', '', '+', '<C-w>+')
+call submode#map('bufmove', 'n', '', '-', '<C-w>-')
+"}}}
 
 "引数なしでvimを開くとNERDTreeを起動
 let file_name = expand('%')
@@ -193,13 +230,7 @@ let g:quickrun_config = {
 "endfunction
 "unlet s:hooks
 
-""""""""""""""""""""""""""""""
-" 自動的に閉じ括弧を入力
-""""""""""""""""""""""""""""""
-imap { {}<LEFT>
-imap [ []<LEFT>
-imap ( ()<LEFT>
-""""""""""""""""""""""""""""""
+" backspaceキーで消せる範囲
 set backspace=start,eol,indent
 
 "{{{ file grep
@@ -210,22 +241,6 @@ let QFixWin_EnableMode = 1
 " QFixHowm/QFixGrepの結果表示にロケーションリストを使用する/しない
 let QFix_UseLocationList = 0
 "}}}
-
-inoremap ( ()<ESC>i
-inoremap <expr> ) ClosePair(')')
-inoremap { {}<ESC>i
-inoremap <expr> } ClosePair('}')
-inoremap [ []<ESC>i
-inoremap <expr> ] ClosePair(']')
-" pair close checker.
-" from othree vimrc ( http://github.com/othree/rc/blob/master/osx/.vimrc )
-function ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endf
 
 " check plugin
 NeoBundleCheck
