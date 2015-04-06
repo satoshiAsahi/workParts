@@ -14,18 +14,18 @@ alias gmer="git merge "
 alias glog='git log --pretty=format:"[%cd] %h - %an, %ar : %s" --date=iso'
 alias ll='ls -al'
 alias vizsh='vi ~/.zshrc.alias_local'
+alias workBin='cd /usr/local/src'
 
 
 #-------------------------
 # msao設定
-#-------------------------
-alias msao_dir="/crooz/venus4_space/venus/venus_4.0/project/msao/master"
-#alias msao_dir="/Volumes/venus_4.0/project/msao/master/"
+#------------------------- 
+alias msao_dir="/Users/jcao/workSpace/project/msao"
 alias vm4='ssh root@192.168.0.10'
 alias trans="ssh jcao@transPort01"
 alias jcaoAir="ssh jcao@172.18.12.95"
 alias jcaoAirIp="172.18.12.95"
-alias ctags="/usr/local/Cellar/ctags/5.8/bin/ctags"
+alias ctags="/usr/local/Cellar/ctags/5.8_1/bin/ctags"
 alias ctagsPHP="ctags --languages=php -f ~/php.tags `pwd`"
 
 
