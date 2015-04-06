@@ -80,9 +80,9 @@ if has('vim_starting') &&  file_name == ''
 endif
 
 " カラースキーム
-"colorscheme jellybeans
+colorscheme jellybeans
 "colorscheme darkblue
-colorscheme molokai
+" colorscheme molokai
 
 "----------------------------------------
 " Indent
