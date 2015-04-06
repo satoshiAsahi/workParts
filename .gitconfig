@@ -4,6 +4,7 @@
 [core]
 	excludesfile = /Users/jcao/.gitignore_global
 	autocrlf = input
+	quotepath = false
 #	autoCRLF = false
 #	safecrlf = true
 [diff]

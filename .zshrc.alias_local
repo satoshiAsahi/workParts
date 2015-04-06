@@ -11,10 +11,13 @@ alias gps="gitAction push "
 alias gpu="gitAction pull"
 alias gco="git checkout "
 alias gmer="git merge "
+alias gmert="git merge tool"
+alias gc="git commit"
 alias glog='git log --pretty=format:"[%cd] %h - %an, %ar : %s" --date=iso'
 alias ll='ls -al'
 alias vizsh='vi ~/.zshrc.alias_local'
 alias workBin='cd /usr/local/src'
+alias vi='vim'
 
 
 #-------------------------
@@ -29,7 +32,6 @@ alias ctags="/usr/local/Cellar/ctags/5.8_1/bin/ctags"
 alias ctagsPHP="ctags --languages=php -f ~/php.tags `pwd`"
 
 
-tagsCmd='ctags --languages=php -f'
 tagsVariable=''
 tagsVariable=$tagsVariable"cd $HOME/sample;$tagsCmd $HOME/.vim/tags/sample.tags $HOME/sample;"
 tagsVariable=$tagsVariable"cd $HOME/test;  $tagsCmd $HOME/.vim/tags/test.tags   $HOME/test;"
