@@ -25,6 +25,15 @@ NeoBundle 'szw/vim-tags'
 " コメントON/OFFを手軽に実行
 NeoBundle 'tomtom/tcomment_vim'
 
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'vim-scripts/twilight'
+NeoBundle 'jonathanfilip/vim-lucius'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'vim-scripts/Wombat'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'vim-scripts/rdark'
 "{{{ windowのサイズを可変
 NeoBundle 'kana/vim-submode'
 nnoremap s <Nop>
@@ -72,7 +81,8 @@ endif
 
 " カラースキーム
 "colorscheme jellybeans
-colorscheme darkblue
+"colorscheme darkblue
+colorscheme molokai
 
 "----------------------------------------
 " Indent
@@ -175,6 +185,7 @@ let php_baselib = 1
 let php_htmlInStrings = 1
 let php_noShortTags = 1
 let php_parent_error_close = 1
+" let php_folding = 1
 
 " tplの設定
 au BufNewFile,BufRead *.tpl set filetype=html
