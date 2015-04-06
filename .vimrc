@@ -210,28 +210,15 @@ let g:quickrun_config = {
 \        'command':     'php',
 \        'exec':        '%c -d error_reporting=E_ALL -d display_errors=1 -d display_startup_errors=1 -d log_errors=0 -d xdebug.cli_color=0 -l %o %s:p',
 \        'errorformat': '%m\ in\ %f\ on\ line\ %l',},}
-"}}}
-" vim-watchdogs {{{
-"NeoBundleLazy 'osyo-manga/vim-watchdogs', {
-"\    'depends': ['thinca/vim-quickrun', 'osyo-manga/shabadou.vim', 'KazuakiM/vim-qfsigns', 'KazuakiM/vim-qfstatusline', 'dannyob/quickfixstatus'],
-"\    'autoload' : {
-"\        'filetypes': ['php'],},}
-"let s:hooks = neobundle#get_hooks('vim-watchdogs')
-"function! s:hooks.on_source(bundle)
-"    "vim-qfsigns
-"    nnoremap <Leader>sy :QfsignsJunmp<CR>
-"    "vim-qfstatusline (This setting is userd at lightline)
-"    "let g:Qfstatusline#UpdateCmd = function('lightline#update')
-"    "vim-watchdogs
-"    let g:watchdogs_check_BufWritePost_enable = 0
-"    let g:watchdogs_check_BufWritePost_enables = {
-"    \   'php' : 1,}
-"    let g:watchdogs_check_CursorHold_enable = 1
-"endfunction
-"unlet s:hooks
 
 " backspaceキーで消せる範囲
 set backspace=start,eol,indent
+
+" vim-ref php manual {{{
+NeoBundle 'thinca/vim-ref'
+let g:ref_cache_dir=$HOME.'/.vim/vim-ref/cache'
+let g:ref_phpmanual_path=$HOME.'/.vim/vim-ref/php-chunked-xhtml'
+"}}}
 
 "{{{ file grep
 NeoBundle 'fuenor/qfixgrep'
