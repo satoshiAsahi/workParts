@@ -36,6 +36,8 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'vim-scripts/rdark'
 "{{{ windowのサイズを可変
 NeoBundle 'kana/vim-submode'
+NeoBundle 'vim-scripts/taglist.vim'
+
 nnoremap s <Nop>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -179,13 +181,26 @@ au BufNewFile,BufRead *.php let g:vim_tags_project_tags_command = "ctags --langu
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> 
 
-" phpの設定
+"{{{ phpの設定
 let php_sql_query = 1
 let php_baselib = 1
 let php_htmlInStrings = 1
 let php_noShortTags = 1
 let php_parent_error_close = 1
 " let php_folding = 1
+
+autocmd FileType php set makeprg=php\ -l\ %
+autocmd BufWritePost *.php silent make | if len(getqflist()) != 1 | copen | else | cclose | endif
+
+NeoBundle 'vim-scripts/tagbar-phpctags', {
+  \   'build' : {
+  \     'others' : 'chmod +x bin/phpctags',
+  \   },
+  \ }
+NeoBundle 'vim-scripts/tagbar'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
+"}}}
 
 " tplの設定
 au BufNewFile,BufRead *.tpl set filetype=html
@@ -239,6 +254,11 @@ let QFixWin_EnableMode = 1
 
 " QFixHowm/QFixGrepの結果表示にロケーションリストを使用する/しない
 let QFix_UseLocationList = 0
+"}}}
+
+"{{{
+" スニペット
+NeoBundle 'Shougo/neosnippet.vim'
 "}}}
 
 " check plugin
