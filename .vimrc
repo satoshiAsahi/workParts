@@ -3,14 +3,16 @@ filetype off
 
 if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim
-    call neobundle#begin(expand('~/.vim/bundle/'))
-		NeoBundleFetch 'Shougo/neobundle.vim'
-    call neobundle#end()
 endif
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+	NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end()
+
+filetype plugin indent on
 
 "insert here your Neobundle plugins"
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'vim-scripts/The-NERD-tree'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'Townk/vim-autoclose'
@@ -38,6 +40,31 @@ NeoBundle 'vim-scripts/rdark'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'vim-scripts/taglist.vim'
 
+"{{{ 補完系
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+ 
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+ 
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+"}}}
+
+"{{{ key map系
 nnoremap s <Nop>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -139,8 +166,6 @@ set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
  " バックアップファイルを作成しない
 set nobackup
 
-filetype plugin on
-filetype indent on
 
  " コメントの色を変える
 highlight Comment ctermfg=LightCyan
@@ -188,19 +213,6 @@ let php_htmlInStrings = 1
 let php_noShortTags = 1
 let php_parent_error_close = 1
 " let php_folding = 1
-
-autocmd FileType php set makeprg=php\ -l\ %
-autocmd BufWritePost *.php silent make | if len(getqflist()) != 1 | copen | else | cclose | endif
-
-NeoBundle 'vim-scripts/tagbar-phpctags', {
-  \   'build' : {
-  \     'others' : 'chmod +x bin/phpctags',
-  \   },
-  \ }
-NeoBundle 'vim-scripts/tagbar'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline'
-"}}}
 
 " tplの設定
 au BufNewFile,BufRead *.tpl set filetype=html
@@ -260,6 +272,48 @@ let QFix_UseLocationList = 0
 " スニペット
 NeoBundle 'Shougo/neosnippet.vim'
 "}}}
+
+
+"--- <F6>  タイムスタンプを挿入してinsertモードへ移行 ----
+nmap tt  <ESC>i<C-R>=strftime("%Y/%m/%d")<CR>
+"--- 
+nnoremap pt <ESC>:!ctags --languages=php -f ~/php.tags `pwd`<CR>
+
+"{{{
+" venus特有設定
+" テンプレを開く
+nmap tp :call VenusSwitchFile("tpl")<CR>
+" テンプレ(スマホ)を開く
+" nnoremap <Leader>s :call VenusSwitchFile("tplSp")<CR>
+" コントローラーを開く
+nmap cn :call VenusSwitchFile("Controller")<CR>
+
+function! VenusSwitchFile(action)
+
+  let target = VenusGetTargetFilePath(a:action)
+
+  if findfile(target) != ""
+    execute ":e " . target
+  endif
+
+endfunction
+
+function! VenusGetTargetFilePath(action)
+
+	let path = expand("%:p")
+
+	if a:action == "tpl"
+		let path = substitute(path, "controller", "view\/SP", "")
+		return substitute(path, "\.php", ".tpl", "")
+	elseif a:action == "Controller"
+		let path = substitute(path, "view\/SP", "controller", "")
+		return substitute(path, "\.tpl", ".php", "")
+	endif
+
+endfunction
+"}}}
+
+
 
 " check plugin
 NeoBundleCheck
