@@ -92,6 +92,15 @@ nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
+"--- <F6>  タイムスタンプを挿入してinsertモードへ移行 ----
+nnoremap tt  <ESC>i<C-R>=strftime("%Y/%m/%d")<CR>
+"--- 
+nnoremap pt <ESC>:!ctags --languages=php -f ~/php.tags `pwd`<CR>
+
+" ファイルパスをコピー
+nnoremap zp <ESC>:call system("pbcopy" , expand("%:"))<CR>
+nnoremap zP <ESC>:call system("pbcopy" , expand("%:p"))<CR>
+
 call submode#enter_with('bufmove', 'n', '', 'd>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 'd<', '<C-w><')
 call submode#enter_with('bufmove', 'n', '', 'd+', '<C-w>+')
@@ -274,10 +283,6 @@ NeoBundle 'Shougo/neosnippet.vim'
 "}}}
 
 
-"--- <F6>  タイムスタンプを挿入してinsertモードへ移行 ----
-nmap tt  <ESC>i<C-R>=strftime("%Y/%m/%d")<CR>
-"--- 
-nnoremap pt <ESC>:!ctags --languages=php -f ~/php.tags `pwd`<CR>
 
 "{{{
 " venus特有設定
@@ -293,7 +298,7 @@ function! VenusSwitchFile(action)
   let target = VenusGetTargetFilePath(a:action)
 
   if findfile(target) != ""
-    execute ":e " . target
+    execute ":tabnew " . target
   endif
 
 endfunction
