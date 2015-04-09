@@ -318,6 +318,7 @@ function! VenusGetTargetFilePath(action)
 endfunction
 "}}}
 
+" source ~/.vim/diff_menu.vim
 
 
 " check plugin
