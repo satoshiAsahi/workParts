@@ -23,7 +23,8 @@ alias vi='vim'
 #-------------------------
 # msao設定
 #------------------------- 
-alias msao_dir="/Users/jcao/workSpace/sources/project/msao"
+#alias msao_dir="/Users/jcao/workSpace/sources/project/msao"
+alias msao_dir="/crooz/venus4_space/venus/venus_4.0/project/msao/master"
 alias vm4='ssh root@192.168.0.10'
 alias trans="ssh jcao@transPort01"
 alias jcaoAir="ssh jcao@172.18.12.95"

@@ -40,29 +40,6 @@ NeoBundle 'vim-scripts/rdark'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'vim-scripts/taglist.vim'
 
-"{{{ 補完系
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
- 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
- 
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-
-"}}}
 
 "{{{ key map系
 nnoremap s <Nop>
@@ -288,8 +265,6 @@ NeoBundle 'Shougo/neosnippet.vim'
 " venus特有設定
 " テンプレを開く
 nmap tp :call VenusSwitchFile("tpl")<CR>
-" テンプレ(スマホ)を開く
-" nnoremap <Leader>s :call VenusSwitchFile("tplSp")<CR>
 " コントローラーを開く
 nmap cn :call VenusSwitchFile("Controller")<CR>
 
@@ -306,20 +281,32 @@ endfunction
 function! VenusGetTargetFilePath(action)
 
 	let path = expand("%:p")
+	"管理画面と表画面の切り分け
+	if match(path , '/admin/') > 0
+		let dir="PC"
+	else
+		let dir="SP"
+	endif
 
 	if a:action == "tpl"
-		let path = substitute(path, "controller", "view\/SP", "")
+		let path = substitute(path, "controller", "view\/".dir, "")
 		return substitute(path, "\.php", ".tpl", "")
 	elseif a:action == "Controller"
-		let path = substitute(path, "view\/SP", "controller", "")
+		let path = substitute(path, "view\/".dir, "controller", "")
 		return substitute(path, "\.tpl", ".php", "")
 	endif
 
 endfunction
 "}}}
 
+"{{{
+" memuにdiffオプションを付ける
 " source ~/.vim/diff_menu.vim
+"}}}
 
-
+"{{{
+" log
+let g:neobundle#log_filename = "/tmp/neobundle.log"
+"}}}
 " check plugin
 NeoBundleCheck
