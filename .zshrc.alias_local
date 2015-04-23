@@ -11,7 +11,7 @@ alias gps="gitAction push "
 alias gpu="gitAction pull"
 alias gco="git checkout "
 alias gmer="git merge "
-alias gmert="git merge tool"
+alias gmert="git mergetool"
 alias gc="git commit"
 alias glog='git log --pretty=format:"[%cd] %h - %an, %ar : %s" --date=iso'
 alias ll='ls -al'
