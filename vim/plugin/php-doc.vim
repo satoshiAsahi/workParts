@@ -67,7 +67,8 @@ let g:pdv_cfg_Package = ""
 let g:pdv_cfg_Version = ""
 let g:pdv_cfg_Since = strftime("%Y-%m-%d %H:%I:%S")
 let g:pdv_cfg_Author = "jcao <jcao@crooz.co.jp>"
-let g:pdv_cfg_Copyright = "Copyright (C) ".strftime("%Y")." Hoge Corporation. All Rights Reserved."
+"let g:pdv_cfg_Copyright = "Copyright (C) ".strftime("%Y")." Hoge Corporation. All Rights Reserved."
+let g:pdv_cfg_Copyright = "(C) ".strftime("%Y")." CROOZ All Rights Reserved"
 let g:pdv_cfg_License = ""
 
 " " Default values
