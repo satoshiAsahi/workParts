@@ -200,6 +200,10 @@ let php_noShortTags = 1
 let php_parent_error_close = 1
 " let php_folding = 1
 
+
+" 辞書登録
+autocmd FileType php :set dictionary+=~/.vim/php.dict
+"}}}
 " tplの設定
 au BufNewFile,BufRead *.tpl set filetype=html
 
@@ -239,10 +243,6 @@ let g:quickrun_config = {
 " backspaceキーで消せる範囲
 set backspace=start,eol,indent
 
-" vim-ref php manual {{{
-NeoBundle 'thinca/vim-ref'
-let g:ref_cache_dir=$HOME.'/.vim/vim-ref/cache'
-let g:ref_phpmanual_path=$HOME.'/.vim/vim-ref/php-chunked-xhtml'
 "}}}
 
 "{{{ file grep
@@ -303,6 +303,13 @@ endfunction
 " memuにdiffオプションを付ける
 " source ~/.vim/diff_menu.vim
 "}}}
+
+source $HOME/.vim/plugin/php-doc.vim
+imap <C-o> :set paste<CR>:exe PhpDoc()<CR>:set nopaste<CR>i
+inoremap <C-i> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-i> :call PhpDocSingle()<CR>
+vnoremap <C-i> :call PhpDocRange()<CR>-
+
 
 "{{{
 " log
