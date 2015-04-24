@@ -112,7 +112,7 @@ let g:pdv_re_abstract = '\(abstract\)'
 let g:pdv_re_final = '\(final\)'
 
 " [:space:]*(private|protected|public|static|abstract)*[:space:]+[:identifier:]+\([:params:]\)
-let g:pdv_re_func = '^.*\([a-zA-Z ]\+\)function[ ]\+\([^ (]\+\)[ ]*([ ]*\(.*\)[ ]*)[ ]*[{;]\?$'
+let g:pdv_re_func = '.*\([a-zA-Z ]\+\)function[ ]\+\([^ (]\+\)[ ]*([ ]*\(.*\)[ ]*)[ ]*[{;]\?$'
 " [:typehint:]*[:space:]*$[:identifier]\([:space:]*=[:space:]*[:value:]\)?
 let g:pdv_re_param = ' *\([^ ]*\) *&\?\$\([A-Za-z_][A-Za-z0-9_]*\) *=\? *\(.*\)\?$'
 
@@ -175,7 +175,8 @@ func! PhpDoc()
     
     let l:line = getline(".")
     let l:result = ""
-
+" echomsg string(l:linec)
+" message
     if l:line =~ g:pdv_re_func
         let l:result = PhpDocFunc()
 
@@ -184,7 +185,6 @@ func! PhpDoc()
 
     elseif l:line =~ g:pdv_re_class
         let l:result = PhpDocClass()
-
     else
         let l:result = PhpDocDefault()
     endif
