@@ -41,53 +41,6 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'vim-scripts/taglist.vim'
 
 
-"{{{ key map系
-nnoremap s <Nop>
-nnoremap sj <C-w>j
-nnoremap sk <C-w>k
-nnoremap sl <C-w>l
-nnoremap sh <C-w>h
-nnoremap sJ <C-w>J
-nnoremap sK <C-w>K
-nnoremap sL <C-w>L
-nnoremap sH <C-w>H
-nnoremap sn gt
-nnoremap sp gT
-nnoremap sr <C-w>r
-nnoremap s= <C-w>=
-nnoremap sw <C-w>w
-nnoremap so <C-w>_<C-w>|
-nnoremap sO <C-w>=
-nnoremap sN :<C-u>bn<CR>
-nnoremap sP :<C-u>bp<CR>
-nnoremap st :<C-u>tabnew<CR>
-nnoremap sT :<C-u>Unite tab<CR>
-nnoremap ss :<C-u>sp<CR>
-nnoremap sv :<C-u>vs<CR>
-nnoremap sq :<C-u>q<CR>
-nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
-
-"--- <F6>  タイムスタンプを挿入してinsertモードへ移行 ----
-nnoremap tt  <ESC>i<C-R>=strftime("%Y/%m/%d")<CR>
-"--- 
-nnoremap pt <ESC>:!ctags --languages=php -f ~/php.tags `pwd`<CR>
-
-" ファイルパスをコピー
-nnoremap zp <ESC>:call system("pbcopy" , expand("%:"))<CR>
-nnoremap zP <ESC>:call system("pbcopy" , expand("%:p"))<CR>
-
-call submode#enter_with('bufmove', 'n', '', 'd>', '<C-w>>')
-call submode#enter_with('bufmove', 'n', '', 'd<', '<C-w><')
-call submode#enter_with('bufmove', 'n', '', 'd+', '<C-w>+')
-call submode#enter_with('bufmove', 'n', '', 'd-', '<C-w>-')
-call submode#map('bufmove', 'n', '', '>', '<C-w>>')
-call submode#map('bufmove', 'n', '', '<', '<C-w><')
-call submode#map('bufmove', 'n', '', '+', '<C-w>+')
-call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-"}}}
-
 "引数なしでvimを開くとNERDTreeを起動
 let file_name = expand('%')
 if has('vim_starting') &&  file_name == ''
@@ -162,10 +115,6 @@ set wrap
  " auto インデント
 set smartindent
 
-" key map
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
-nnoremap <silent> <C-l> :NERDTreeFind<CR>
-
 "行番号をマウスコピーした時についてこないように設定
 set mouse=a
 
@@ -200,6 +149,10 @@ let php_noShortTags = 1
 let php_parent_error_close = 1
 " let php_folding = 1
 
+
+" 辞書登録
+autocmd FileType php :set dictionary+=~/.vim/php.dict
+"}}}
 " tplの設定
 au BufNewFile,BufRead *.tpl set filetype=html
 
@@ -239,10 +192,6 @@ let g:quickrun_config = {
 " backspaceキーで消せる範囲
 set backspace=start,eol,indent
 
-" vim-ref php manual {{{
-NeoBundle 'thinca/vim-ref'
-let g:ref_cache_dir=$HOME.'/.vim/vim-ref/cache'
-let g:ref_phpmanual_path=$HOME.'/.vim/vim-ref/php-chunked-xhtml'
 "}}}
 
 "{{{ file grep
@@ -300,13 +249,23 @@ endfunction
 "}}}
 
 "{{{
-" memuにdiffオプションを付ける
-" source ~/.vim/diff_menu.vim
+" 自前のプラグインを読み込む
+runtime! myPlugin/*.vim
+runtime! plugin/*.vim
+"}}}
+
+"{{{
+" phpドキュメント
+imap <C-o> :set paste<CR>:exe PhpDoc()<CR>:set nopaste<CR>i
+inoremap <C-i> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-i> :call PhpDocSingle()<CR>
+vnoremap <C-i> :call PhpDocRange()<CR>-
 "}}}
 
 "{{{
 " log
 let g:neobundle#log_filename = "/tmp/neobundle.log"
 "}}}
+
 " check plugin
 NeoBundleCheck
