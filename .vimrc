@@ -118,20 +118,6 @@ set smartindent
 "行番号をマウスコピーした時についてこないように設定
 set mouse=a
 
-" vモードの置換連続ペースト用
-"function! put_text_without_override_register()
-"  let line_len = strlen(getline('.'))
-"  execute "normal! `>"
-"  let col_loc = col('.')
-"  execute 'normal! gv"_x'
-"  if line_len == col_loc
-"    execute 'normal! p'
-"  else 
-"    execute 'normal! p'
-"  endif
-"endfunction
-"xnoremap <silent> p :call Put_text_without_override_register()<CR>
-"vnoremap <silent> p "0p
 set clipboard+=unnamed,autoselect
 
 " [Ctags設定]拡張子で読み込みタグ変更
@@ -139,6 +125,12 @@ au BufNewFile,BufRead *.php set tags+=$HOME/php.tags
 " vim-tags
 au BufNewFile,BufRead *.php let g:vim_tags_project_tags_command = "ctags --languages=php -f ~/php.tags `pwd` 2>/dev/null &"
 " tagsジャンプの時に複数ある時は一覧表示
+
+" VimScriptのctags
+au BufNewFile,BufRead *.vim set tags+=$HOME/vim.tags
+au BufNewFile,BufRead *.vim let g:vim_tags_project_tags_command = "ctags --languages=vim -f ~/vim.tags `pwd` 2>/dev/null &"
+
+
 nnoremap <C-]> g<C-]> 
 
 "{{{ phpの設定
@@ -221,8 +213,22 @@ function! VenusSwitchFile(action)
 
   let target = VenusGetTargetFilePath(a:action)
 
+let _log = expand(":ls")
+" echomsg string(_log)
+" message
+
   if findfile(target) != ""
+    let _bufNum = bufnr(target)
+" echomsg string(_bufNum)
+" message
+" バッファ番号が存在するタブを閉じる
+	if _bufNum > 0
+	    execute ":bd" . _bufNum
+	endif
+" 新しいタブを開く
     execute ":tabnew " . target
+  else
+	echo "対象がない！！"
   endif
 
 endfunction
@@ -231,19 +237,34 @@ function! VenusGetTargetFilePath(action)
 
 	let path = expand("%:p")
 	"管理画面と表画面の切り分け
-	if match(path , '/admin/') > 0
-		let dir="PC"
+
+	if match(path ,'crooz_ec') > 0
+		if a:action == "tpl"
+			let path = substitute(path, "controller\/", "templates\/", "")
+			return substitute(path, "\.php", ".tpl", "")
+		elseif a:action == "Controller"
+			let path = substitute(path, "templates\/", "controller\/", "")
+			return substitute(path, "\.tpl", ".php", "")
+		endif
+
 	else
-		let dir="SP"
+		if match(path , '/admin/') > 0
+			let dir="PC"
+		else
+			let dir="SP"
+		endif
+
+		if a:action == "tpl"
+			let path = substitute(path, "controller", "view\/".dir, "")
+			return substitute(path, "\.php", ".tpl", "")
+		elseif a:action == "Controller"
+			let path = substitute(path, "view\/".dir, "controller", "")
+			return substitute(path, "\.tpl", ".php", "")
+		endif
+
 	endif
 
-	if a:action == "tpl"
-		let path = substitute(path, "controller", "view\/".dir, "")
-		return substitute(path, "\.php", ".tpl", "")
-	elseif a:action == "Controller"
-		let path = substitute(path, "view\/".dir, "controller", "")
-		return substitute(path, "\.tpl", ".php", "")
-	endif
+
 
 endfunction
 "}}}

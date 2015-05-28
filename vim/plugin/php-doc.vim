@@ -94,7 +94,7 @@ let g:pdv_cfg_php4always = 1
 let g:pdv_cfg_php4guess = 1
 " If you selected 1 for the last value, this scope identifier will be used for
 " the identifiers having an _ in the first place.
-let g:pdv_cfg_php4guessval = "protected"
+let g:pdv_cfg_php4guessval = ""
 
 "
 " Regular expressions 
@@ -207,11 +207,11 @@ func! PhpDocFunc()
 
 	" First some things to make it more easy for us:
 	" tab -> space && space+ -> space
-	let l:name = substitute (l:name, '\t', ' ', "")
+	"let l:name = substitute (l:name, '\t', ' ', "")
 
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(funcname\)\(parameters\)
-    let l:indent = matchstr(l:name, '^\ *')
+    let l:indent = "	"
 	
 	let l:modifier = substitute (l:name, g:pdv_re_func, '\1', "g")
 	let l:funcname = substitute (l:name, g:pdv_re_func, '\2', "g")
@@ -225,11 +225,12 @@ func! PhpDocFunc()
     
     " Local indent
     let l:txtBOL = g:pdv_cfg_BOL . indent
-	
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Comment1 . funcname . " " . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@since " . g:pdv_cfg_Since . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . "	" .g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . "@since" .indent. g:pdv_cfg_Since . g:pdv_cfg_EOL
+
+    exe l:txtBOL . g:pdv_cfg_Commentn . "@author" .indent. g:pdv_cfg_Author . g:pdv_cfg_EOL
 
 	while (l:parameters != ",") && (l:parameters != "")
 		" Save 1st parameter
@@ -247,25 +248,25 @@ func! PhpDocFunc()
             let l:paramtype = PhpDocType(l:paramdefault)
         endif
         
-        if l:paramtype != ""
-            let l:paramtype = " " . l:paramtype
-        endif
-		exe l:txtBOL . g:pdv_cfg_Commentn . "@param" . l:paramtype . " $" . l:paramname . " " . g:pdv_cfg_EOL
+        " if l:paramtype != ""
+        "     let l:paramtype = "" . l:paramtype
+        " endif
+		exe l:txtBOL . g:pdv_cfg_Commentn . "@param" .indent. l:paramtype . " $" . l:paramname . " " . g:pdv_cfg_EOL
 	endwhile
 
 	if l:static != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@static" . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@static" . indent .g:pdv_cfg_EOL
     endif
 	if l:abstract != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@abstract" . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@abstract" .indent. g:pdv_cfg_EOL
     endif
 	if l:final != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . indent . g:pdv_cfg_EOL
     endif
     if l:scope != ""
-    	exe l:txtBOL . g:pdv_cfg_Commentn . "@access " . l:scope . g:pdv_cfg_EOL
+    	exe l:txtBOL . g:pdv_cfg_Commentn . "@access" . indent . l:scope . g:pdv_cfg_EOL
     endif
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@return " . g:pdv_cfg_ReturnVal . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@return" . indent . g:pdv_cfg_ReturnVal . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -287,7 +288,7 @@ func! PhpDocVar()
 
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(funcname\)\(parameters\)
-    let l:indent = matchstr(l:name, '^\ *')
+    let l:indent = "	"
 
 	let l:modifier = substitute (l:name, g:pdv_re_attribute, '\1', "g")
 	let l:varname = substitute (l:name, g:pdv_re_attribute, '\3', "g")
@@ -307,11 +308,11 @@ func! PhpDocVar()
 	exe l:txtBOL . g:pdv_cfg_Comment1 . l:varname . " " . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
     if l:static != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@static" . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@static" . indent . g:pdv_cfg_EOL
     endif
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@var " . l:type . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . "@var" . indent . l:type . g:pdv_cfg_EOL
     if l:scope != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@access " . l:scope . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@access" . indent . l:scope . g:pdv_cfg_EOL
     endif
 	
     " Close the comment block.
@@ -336,6 +337,7 @@ func! PhpDocClass()
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(classname\)\(parameters\)
     let l:indent = matchstr(l:name, '^\ *')
+    let l:indent2 = "	"
 	
 	let l:modifier = substitute (l:name, g:pdv_re_class, '\1', "g")
 	let l:classname = substitute (l:name, g:pdv_re_class, '\3', "g")
@@ -354,7 +356,7 @@ func! PhpDocClass()
 	exe l:txtBOL . g:pdv_cfg_Comment1 . l:classname . " " . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
     if l:extends != "" && l:extends != "implements"
-    	exe l:txtBOL . g:pdv_cfg_Commentn . "@uses " . l:extends . g:pdv_cfg_EOL
+    	exe l:txtBOL . g:pdv_cfg_Commentn . "@uses" . indent2 . l:extends . g:pdv_cfg_EOL
     endif
 
 	while (l:interfaces != ",") && (l:interfaces != "")
@@ -362,21 +364,21 @@ func! PhpDocClass()
 		let interface = substitute (l:interfaces, '\([^, ]*\) *, *\(.*\)', '\1', "")
 		" Remove this one from list
 		let l:interfaces = substitute (l:interfaces, '\([^, ]*\) *, *\(.*\)', '\2', "")
-		exe l:txtBOL . g:pdv_cfg_Commentn . "@uses " . l:interface . g:pdv_cfg_EOL
+		exe l:txtBOL . g:pdv_cfg_Commentn . "@uses" . indent2 .l:interface . g:pdv_cfg_EOL
 	endwhile
 
 	if l:abstract != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@abstract" . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@abstract" . indent2 . g:pdv_cfg_EOL
     endif
 	if l:final != ""
-        exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
+        exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . indent2 . g:pdv_cfg_EOL
     endif
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@package " . g:pdv_cfg_Package . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@version " . g:pdv_cfg_Version . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@since " . g:pdv_cfg_Since . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@author " . g:pdv_cfg_Author . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@license " . g:pdv_cfg_License . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@package" . indent2 . g:pdv_cfg_Package . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@version" . indent2 . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@since" . indent2 . g:pdv_cfg_Since . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@author" . indent2 . g:pdv_cfg_Author . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@license" . indent2 . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright" . indent2 . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -438,7 +440,7 @@ func! PhpDocDefault()
 	" Line for the comment to begin
 	let commentline = line (".") - 1
     
-    let l:indent = matchstr(getline("."), '^\ *')
+    let l:indent = matchstr(getline("."), '^\	*')
     
     exe "norm! " . commentline . "G$"
     
