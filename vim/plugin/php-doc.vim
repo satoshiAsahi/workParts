@@ -284,7 +284,7 @@ func! PhpDocVar()
 
 	" First some things to make it more easy for us:
 	" tab -> space && space+ -> space
-	let l:name = substitute (l:name, '\t', ' ', "")
+	"let l:name = substitute (l:name, '\t', ' ', "")
 
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(funcname\)\(parameters\)
@@ -332,7 +332,7 @@ func! PhpDocClass()
 
 	" First some things to make it more easy for us:
 	" tab -> space && space+ -> space
-	let l:name = substitute (l:name, '\t', ' ', "")
+	" let l:name = substitute (l:name, '\t', ' ', "")
 
 	" Now we have to split DECL in three parts:
 	" \[(skopemodifier\)]\(classname\)\(parameters\)

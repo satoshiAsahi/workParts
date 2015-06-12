@@ -214,7 +214,7 @@ function! VenusSwitchFile(action)
   let target = VenusGetTargetFilePath(a:action)
 
 let _log = expand(":ls")
-" echomsg string(_log)
+" echomsg string(target)
 " message
 
   if findfile(target) != ""
@@ -239,11 +239,20 @@ function! VenusGetTargetFilePath(action)
 	"管理画面と表画面の切り分け
 
 	if match(path ,'crooz_ec') > 0
+
+		if match(path , 'reuselist') > 0
+			let _dir = 'templates_pc'
+		elseif match(path , 'mobile') > 0
+			let _dir = 'templates_html5'
+		else
+			let _dir = 'templates'
+		endif
+
 		if a:action == "tpl"
-			let path = substitute(path, "controller\/", "templates\/", "")
+			let path = substitute(path, "controller\/", _dir . "\/", "")
 			return substitute(path, "\.php", ".tpl", "")
 		elseif a:action == "Controller"
-			let path = substitute(path, "templates\/", "controller\/", "")
+			let path = substitute(path, _dir."\/", "controller\/", "")
 			return substitute(path, "\.tpl", ".php", "")
 		endif
 
@@ -278,9 +287,11 @@ runtime! plugin/*.vim
 "{{{
 " phpドキュメント
 imap <C-o> :set paste<CR>:exe PhpDoc()<CR>:set nopaste<CR>i
-inoremap <C-i> <ESC>:call PhpDocSingle()<CR>i
-nnoremap <C-i> :call PhpDocSingle()<CR>
-vnoremap <C-i> :call PhpDocRange()<CR>-
+nnoremap <C-i> :call PhpDocSingle()<CR>i
+" inoremap <C-i> :call PhpDocSingle()<CR>i
+" nnoremap <C-i> :call PhpDocSingle()<CR>
+" vnoremap <C-i> :call PhpDocRange()<CR>-
+
 "}}}
 
 "{{{
