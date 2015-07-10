@@ -51,3 +51,4 @@ call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 nnoremap <silent> <C-l> :NERDTreeFind<CR>
 
+vmap <C-c> :w !xsel -ib<CR><CR>

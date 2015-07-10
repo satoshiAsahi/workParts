@@ -140,5 +140,3 @@ function loadlib() {
 }
 
 loadlib $HOME/.zshrc.alias_local
-
-alias vm4='ssh root@192.168.0.10'

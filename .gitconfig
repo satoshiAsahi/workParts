@@ -10,7 +10,8 @@
 [diff]
   #tool = vimdiff
   #algorithm = histogram
-  external = git_diff_wrapper
+  # external = git_diff_wrapper
+  external = /home/tony/workParts/git_diff_wrapper.sh
 [pager]
 	  diff =
 [mergetool "vimdiff3"]
