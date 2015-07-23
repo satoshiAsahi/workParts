@@ -26,16 +26,16 @@ alias vi='vim'
 #alias msao_dir="/Users/jcao/workSpace/sources/project/msao"
 alias msao_dir="/crooz/venus4_space/venus/venus_4.0/project/msao/master"
 #alias crooz_ec="/crooz/venus3_space/venus/venus_3.0/project/crooz_ec/"
-alias crooz_ec="~/workSpace/sources/venus3/project/crooz_ec/master"
-alias sv="~/workSpace/sources/sv"
 alias vm4='ssh root@192.168.0.10'
-alias vm3='ssh asahi@192.168.0.9'
+alias vm3='ssh root@192.168.0.9'
 alias trans="ssh jcao@transPort01"
 alias jcaoAir="ssh jcao@172.18.12.95"
 alias jcaoAirIp="172.18.12.95"
 alias ctags="/usr/local/Cellar/ctags/5.8_1/bin/ctags"
 alias ctagsPHP="ctags --languages=php -f ~/php.tags `pwd`"
-alias sssh="/Users/jcao/workSpace/bin/sssh.sh"
+alias sssh="/Users/jcao/work/bin/sssh.sh"
+alias ec="/Users/jcao/work/sources/venus3/project/master"
+alias ecbox="/usr/local/src/shoplist"
 
 
 tagsVariable=''
