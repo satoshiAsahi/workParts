@@ -13,7 +13,7 @@ alias gco="git checkout "
 alias gmer="git merge "
 alias gmert="git mergetool"
 alias gc="git commit"
-alias glog='git log --pretty=format:"[%cd] %h - %an, %ar : %s" --date=iso'
+alias glog='git log --pretty=format:"[%cd] %h : %p - %an, %ar : %s" --date=iso'
 alias ll='ls -al'
 alias vizsh='vi ~/.zshrc.alias_local'
 alias workBin='cd /usr/local/src'
